@@ -15,7 +15,7 @@
 ## Description
 
 **Description:**
-Scrap Knight is a top-down action game where the player's weapon is built from scavenged mechanical parts. Each part has limited durability and can break during combat. Players must constantly fight, collect replacement parts, and adapt their weapon to survive increasingly difficult enemies.
+Scrap Knight is a top-down action roguelite game where the player's weapon is built from scavenged mechanical parts. Each part has limited durability and can break during combat. Players must constantly fight, collect replacement parts, and adapt their weapon to survive increasingly difficult enemies.
 
 ---
 
@@ -81,8 +81,6 @@ Fight enemies → collect dropped weapon parts → replace broken or unwanted pa
 
 ### How Should They Feel?
 
-**Incorporate LeBlanc's Taxonomy of Pleasures:**
-
 The player should feel engaged, pressured, and rewarded for adapting to changing situations. The main pleasures are challenge, discovery, and mastery. Players should feel that their decisions about weapon parts directly affect their ability to survive.
 
 ### Game Inspirations
@@ -104,8 +102,6 @@ The player should feel engaged, pressured, and rewarded for adapting to changing
 Top-down action shooter / survival roguelite.
 
 ### Target Audience
-
-**Incorporate Bartle's Taxonomy:**
 
 Primarily **Killers**, who enjoy combat and overcoming enemies, with elements for **Achievers**, who enjoy improving their weapon and surviving increasingly difficult encounters.
 
@@ -134,3 +130,15 @@ The game begins with a basic weapon and simple enemies. As the player progresses
 ## Anything Else Unusual That Needs Explaining
 
 The game is designed around maintaining a weapon rather than simply upgrading it. Weapon parts can break during normal gameplay, so the player must actively search for replacement parts while continuing to fight. The intention is for this system to remain part of the gameplay rather than interrupting combat with frequent upgrade menus.
+
+---
+
+## Scope and Cutoff lines
+
+The core scope of the game is to start the player with a basic gun which allows enhancements to be built onto it using weapon parts. As the player progresses through the run, enemies get stronger through introducing new enemy types. Weapon parts are dropped by enemies during combat, encouraging players to adapt their weapon and play style during the gameplay. As they get deeper into the run, the chance for higher level weapon parts increases, eventually the run will end with a boss encounter.
+
+The cutoff line will include the basic weapon-part system, weapon durability and breaking, a few enemy types, increasing difficulty, stronger weapon-part drops over time, and a playable run structure.
+
+Stretch goals include adding more weapon enhancements, implementing a boss encounter, adding more enemy types, and adding arena hazards. These features will be added if the core gameplay is completed and I have additional development time.
+
+---
