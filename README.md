@@ -2,8 +2,6 @@
 
 **Student Name:** Nolan Tsang
 
-**Student ID:** 100921652
-
 **Class:** CSCI 4160U Game Development
 
 **Repository Link:** https://github.com/tsanger2004/Scrap-Knight
