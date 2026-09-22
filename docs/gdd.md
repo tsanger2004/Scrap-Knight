@@ -2,8 +2,6 @@
 
 **Student Name:** Nolan Tsang
 
-**Student ID:** 100921652
-
 **Date:** September 22, 2026
 
 **Class:** CSCI 4160U Game Development
