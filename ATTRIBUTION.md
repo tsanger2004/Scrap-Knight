@@ -1,14 +1,22 @@
-# ATTRIBUTION.md
+# Attribution
 
 ## AI Use
 
-- ChatGPT-5.6 Luna — assisted with brainstorming the game concept and mechanics.
-- ChatGPT-5.6 Luna — assisted with explaining Odin/Raylib initial setup.
-- All final code and implementation decisions were reviewed and understood by the author.
+- GitHub Copilot, accessed through Copilot SDK in VS Code, assisted with project
+  structure, Odin/Raylib setup, and CP2 architecture.
+- The author reviewed, understood, and made the final decisions for all submitted
+  code and design changes.
+
+## Libraries and Tools
+
+- Odin programming language: https://odin-lang.org/
+- Raylib, used through Odin's built-in `vendor:raylib` package:
+  https://github.com/raysan5/raylib
 
 ## Assets
 
-- All visual assets are original programmer-created shapes rendered using Raylib.
-- All sound effects: [source / self-created].
-- Music: [source / self-created].
-- Font: [font name, source, licence] / None.
+- Visuals: no external assets; all visuals are programmer-created shapes rendered
+  with Raylib.
+- Sound effects: none.
+- Music: none.
+- Fonts: no custom font; the default Raylib font is used.

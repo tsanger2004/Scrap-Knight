@@ -28,5 +28,36 @@ Scrap Knight is a top-down action roguelite game where the player's weapon is bu
 
 ## How to build and run the game
 
----
+The prototype uses Odin's built-in `vendor:raylib` package. With Odin installed and
+available on `PATH`, run:
 
+```powershell
+odin run src
+```
+
+To build an executable without launching it:
+
+```powershell
+odin build src -out:scrap_knight.exe
+.\scrap_knight.exe
+```
+
+## Prototype controls
+
+* **WASD / Arrow keys** - Move the Scrap Knight.
+* **Mouse** - Aim.
+* **Left mouse button** - Fire the assembled weapon.
+* **R** - Rebuild after the player is defeated.
+
+## Design slice
+
+This first playable slice focuses on the project's core loop:
+
+1. Fight increasingly dense waves of Scrappers and Chargers.
+2. Spend barrel durability whenever the weapon fires.
+3. Collect dropped Barrel, Grip, and Plating parts to repair or improve the build.
+4. Survive as long as possible while adapting to a weapon that can break.
+
+All visuals are drawn with Raylib primitives, so the prototype does not require
+external assets.
+---

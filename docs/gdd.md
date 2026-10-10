@@ -133,12 +133,12 @@ The game is designed around maintaining a weapon rather than simply upgrading it
 
 ---
 
-## Scope and Cutoff lines
+## Scope and Cutoff Lines (Locked for CP2)
 
-The core scope of the game is to start the player with a basic gun which allows enhancements to be built onto it using weapon parts. As the player progresses through the run, enemies get stronger through introducing new enemy types. Weapon parts are dropped by enemies during combat, encouraging players to adapt their weapon and play style during the gameplay. As they get deeper into the run, the chance for higher level weapon parts increases, eventually the run will end with a boss encounter.
+The locked core scope is one playable PC run in a single top-down arena. The player starts with one basic gun and can collect three weapon-part types (Barrel, Grip, and Plating). The run must include movement, aiming and shooting, weapon-part durability and breaking, two enemy types (Scrapper and Charger), enemy drops, increasing wave difficulty, health and damage, and the Playing/Game Over state transition with restart.
 
-The cutoff line will include the basic weapon-part system, weapon durability and breaking, a few enemy types, increasing difficulty, stronger weapon-part drops over time, and a playable run structure.
+The cutoff line is reached when that run is playable from start to Game Over. The following are explicitly out of scope for the core deliverable: a boss encounter, additional enemy types, arena hazards, special weapon effects, extra arenas, menus, meta-progression, and more weapon-part types. These may only be attempted as stretch work after the cutoff is complete.
 
-Stretch goals include adding more weapon enhancements, implementing a boss encounter, adding more enemy types, and adding arena hazards. These features will be added if the core gameplay is completed and I have additional development time.
+This scope is locked for CP2. Any change to the core features, cutoff line, or stretch-goal list requires a conversation before it is committed.
 
 ---
