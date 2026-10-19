@@ -66,3 +66,20 @@ Game :: struct {
 	message: cstring,
 	message_timer: f32,
 }
+
+Tuning :: struct {
+	player_speed: f32,
+	bullet_speed: f32,
+	fire_interval: f32,
+	spawn_interval: f32,
+	spawn_interval_floor: f32,
+	enemy_speed: f32,
+	charger_chance: f32,
+	charger_damage: int,
+	scrapper_damage: int,
+}
+
+Assets :: struct {
+	player_texture: rl.Texture2D,
+	pickup_sound: rl.Sound,
+}

@@ -56,6 +56,8 @@ This first playable slice focuses on the project's core loop:
 3. Collect dropped Barrel, Grip, and Plating parts to repair or improve the build.
 4. Survive as long as possible while adapting to a weapon that can break.
 
-All visuals are drawn with Raylib primitives, so the prototype does not require
-external assets.
+Runtime tuning is read once from `data/game.cfg` at startup. Edit a value such as
+`player_speed` or `spawn_interval`, restart the game, and the behavior changes
+without editing Odin code. The generated player texture and pickup sound are
+loaded once at startup and shared by the game loop.
 ---

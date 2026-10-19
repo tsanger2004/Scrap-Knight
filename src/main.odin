@@ -6,6 +6,8 @@ import "core:math"
 import "core:math/rand"
 
 game: Game
+tuning: Tuning
+assets: Assets
 
 vec_add :: proc(a, b: Vec2) -> Vec2 { return Vec2{a.x + b.x, a.y + b.y} }
 vec_sub :: proc(a, b: Vec2) -> Vec2 { return Vec2{a.x - b.x, a.y - b.y} }
@@ -25,7 +27,7 @@ reset_game :: proc() {
 		pos = Vec2{ARENA_W / 2, ARENA_H / 2},
 		health = 100,
 		max_health = 100,
-		speed = 250,
+		speed = tuning.player_speed,
 	}
 	game.barrel_durability = 80
 	game.barrel_max = 80
@@ -48,8 +50,8 @@ spawn_enemy :: proc() {
 		}
 		kind := Enemy_Kind.Scrapper
 		health := 3 + game.wave / 3
-		speed := 65 + f32(game.wave) * 3
-		if rand.float32() < min(0.15 + f32(game.wave) * 0.01, 0.35) {
+		speed := tuning.enemy_speed + f32(game.wave) * 3
+		if rand.float32() < min(tuning.charger_chance + f32(game.wave) * 0.01, 0.35) {
 			kind = .Charger
 			health += 3
 			speed *= 1.35
@@ -79,7 +81,7 @@ fire :: proc() {
 		if game.barrel_durability <= 0 do damage = 1
 		game.bullets[i] = Bullet{
 			pos = game.player.pos,
-			velocity = vec_scale(direction, 620),
+			velocity = vec_scale(direction, tuning.bullet_speed),
 			damage = damage,
 			alive = true,
 		}
@@ -105,7 +107,7 @@ update_player :: proc(dt: f32) {
 	game.player.pos.y = clamp(game.player.pos.y, 24, ARENA_H - 24)
 	game.player.invulnerable = max(game.player.invulnerable - dt, 0)
 	game.player.fire_timer -= dt
-	fire_rate := 0.25 - f32(game.grip_level) * 0.025
+	fire_rate := tuning.fire_interval - f32(game.grip_level) * 0.025
 	if game.barrel_durability <= 0 do fire_rate = 0.45
 	if rl.IsMouseButtonDown(.LEFT) && game.player.fire_timer <= 0 {
 		fire()
@@ -144,8 +146,8 @@ update_enemies :: proc(dt: f32) {
 		direction := vec_normalize(vec_sub(game.player.pos, enemy.pos))
 		enemy.pos = vec_add(enemy.pos, vec_scale(direction, enemy.speed * dt))
 		if distance(enemy.pos, game.player.pos) < 27 && game.player.invulnerable <= 0 {
-			damage := 8
-			if enemy.kind == .Charger do damage = 14
+			damage := tuning.scrapper_damage
+			if enemy.kind == .Charger do damage = tuning.charger_damage
 			game.player.health -= f32(damage)
 			game.player.invulnerable = 0.65
 		}
@@ -157,6 +159,7 @@ collect_parts :: proc() {
 		part := &game.parts[i]
 		if !part.alive || distance(part.pos, game.player.pos) > 30 do continue
 		part.alive = false
+		if rl.IsSoundValid(assets.pickup_sound) do rl.PlaySound(assets.pickup_sound)
 		switch part.kind {
 		case .Barrel:
 			game.barrel_level += 1
@@ -188,7 +191,7 @@ update_game :: proc(dt: f32) {
 	game.elapsed += dt
 	game.wave = 1 + int(game.elapsed / 20)
 	game.spawn_timer -= dt
-	spawn_rate := max(1.2 - f32(game.wave) * 0.08, 0.28)
+	spawn_rate := max(tuning.spawn_interval - f32(game.wave) * 0.08, tuning.spawn_interval_floor)
 	if game.spawn_timer <= 0 {
 		spawn_enemy()
 		game.spawn_timer = spawn_rate
@@ -205,6 +208,9 @@ main :: proc() {
 	rl.InitWindow(SCREEN_W, SCREEN_H, "Scrap Knight - Main Quest")
 	defer rl.CloseWindow()
 	rl.SetTargetFPS(60)
+	tuning = load_tuning()
+	assets = load_assets()
+	defer unload_assets(&assets)
 	reset_game()
 	for !rl.WindowShouldClose() {
 		update_game(rl.GetFrameTime())

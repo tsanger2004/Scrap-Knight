@@ -15,8 +15,11 @@
 
 ## Assets
 
-- Visuals: no external assets; all visuals are programmer-created shapes rendered
-  with Raylib.
-- Sound effects: none.
+- Visuals: the player texture is generated at startup with Raylib's
+  `GenImageChecked`; no external visual asset is used. Other visuals are
+  programmer-created shapes rendered with Raylib.
+- Sound effects: `assets/pickup.wav` is a short procedurally generated tone
+  shipped with this repository; it is original project content, not downloaded
+  from a third party.
 - Music: none.
 - Fonts: no custom font; the default Raylib font is used.

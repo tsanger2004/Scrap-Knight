@@ -28,7 +28,7 @@ draw_game :: proc() {
 	}
 	player_color := rl.LIME
 	if game.player.invulnerable > 0 do player_color = rl.WHITE
-	rl.DrawCircleV(game.player.pos, 18, player_color)
+	rl.DrawTextureV(assets.player_texture, vec_sub(game.player.pos, Vec2{16, 16}), player_color)
 	aim := vec_normalize(vec_sub(rl.GetMousePosition(), game.player.pos))
 	rl.DrawLineEx(game.player.pos, vec_add(game.player.pos, vec_scale(aim, 28)), 6, rl.DARKGRAY)
 	rl.DrawRectangle(SIDEBAR_X, 0, SCREEN_W - SIDEBAR_X, SCREEN_H, rl.Color{13, 17, 21, 255})
