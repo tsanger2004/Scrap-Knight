@@ -58,6 +58,7 @@ This first playable slice focuses on the project's core loop:
 
 Runtime tuning is read once from `data/game.cfg` at startup. Edit a value such as
 `player_speed` or `spawn_interval`, restart the game, and the behavior changes
-without editing Odin code. The generated player texture and pickup sound are
-loaded once at startup and shared by the game loop.
+without editing Odin code. The LDtk level in `data/main_arena.ldtk` supplies the
+arena tile layout and player spawn. Its tileset, player texture, and pickup sound
+are loaded once at startup and shared by the game loop.
 ---

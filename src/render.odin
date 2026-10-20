@@ -6,8 +6,10 @@ import "core:fmt"
 draw_game :: proc() {
 	rl.ClearBackground(rl.Color{16, 20, 25, 255})
 	rl.DrawRectangle(0, 0, ARENA_W, ARENA_H, rl.Color{25, 31, 35, 255})
-	for x := 0; x < ARENA_W; x += 48 do rl.DrawLine(i32(x), 0, i32(x), i32(ARENA_H), rl.Color{31, 38, 42, 255})
-	for y := 0; y < ARENA_H; y += 48 do rl.DrawLine(0, i32(y), i32(ARENA_W), i32(y), rl.Color{31, 38, 42, 255})
+	for i in 0..<level.tile_count {
+		tile := level.tiles[i]
+		rl.DrawTextureRec(assets.tileset_texture, tile.source, tile.position, rl.WHITE)
+	}
 	for part in game.parts {
 		if !part.alive do continue
 		color := rl.GOLD

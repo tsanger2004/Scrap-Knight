@@ -11,6 +11,7 @@ SIDEBAR_X :: ARENA_W
 MAX_ENEMIES :: 48
 MAX_BULLETS :: 96
 MAX_PARTS :: 24
+MAX_LEVEL_TILES :: 3000
 
 Vec2 :: rl.Vector2
 
@@ -67,6 +68,43 @@ Game :: struct {
 	message_timer: f32,
 }
 
+Level_Tile :: struct {
+	px: [2]int `json:"px"`,
+	src: [2]int `json:"src"`,
+}
+
+Level_Layer :: struct {
+	identifier: string `json:"__identifier"`,
+	grid_tiles: []Level_Tile `json:"gridTiles"`,
+	entity_instances: []Level_Entity `json:"entityInstances"`,
+}
+
+Level_Entity :: struct {
+	identifier: string `json:"__identifier"`,
+	px: [2]int `json:"px"`,
+}
+
+Level_Definition :: struct {
+	layer_instances: []Level_Layer `json:"layerInstances"`,
+	px_wid: int `json:"pxWid"`,
+	px_hei: int `json:"pxHei"`,
+}
+
+Level_File :: struct {
+	levels: []Level_Definition `json:"levels"`,
+}
+
+Arena_Tile :: struct {
+	position: Vec2,
+	source: rl.Rectangle,
+}
+
+Level_Data :: struct {
+	tiles: [MAX_LEVEL_TILES]Arena_Tile,
+	tile_count: int,
+	player_spawn: Vec2,
+}
+
 Tuning :: struct {
 	player_speed: f32,
 	bullet_speed: f32,
@@ -81,5 +119,6 @@ Tuning :: struct {
 
 Assets :: struct {
 	player_texture: rl.Texture2D,
+	tileset_texture: rl.Texture2D,
 	pickup_sound: rl.Sound,
 }

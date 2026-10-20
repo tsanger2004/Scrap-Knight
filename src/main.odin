@@ -8,6 +8,7 @@ import "core:math/rand"
 game: Game
 tuning: Tuning
 assets: Assets
+level: Level_Data
 
 vec_add :: proc(a, b: Vec2) -> Vec2 { return Vec2{a.x + b.x, a.y + b.y} }
 vec_sub :: proc(a, b: Vec2) -> Vec2 { return Vec2{a.x - b.x, a.y - b.y} }
@@ -24,7 +25,7 @@ random_range :: proc(low, high: f32) -> f32 { return low + rand.float32() * (hig
 reset_game :: proc() {
 	game = Game{}
 	game.player = Player{
-		pos = Vec2{ARENA_W / 2, ARENA_H / 2},
+		pos = level.player_spawn,
 		health = 100,
 		max_health = 100,
 		speed = tuning.player_speed,
@@ -209,6 +210,7 @@ main :: proc() {
 	defer rl.CloseWindow()
 	rl.SetTargetFPS(60)
 	tuning = load_tuning()
+	level = load_level()
 	assets = load_assets()
 	defer unload_assets(&assets)
 	reset_game()
