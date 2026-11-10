@@ -16,8 +16,22 @@ draw_game :: proc() {
 		color := rl.GOLD
 		if part.kind == .Grip do color = rl.SKYBLUE
 		if part.kind == .Plating do color = rl.LIGHTGRAY
-		rl.DrawRectangleV(vec_sub(part.pos, Vec2{8, 8}), Vec2{16, 16}, color)
-		rl.DrawRectangleLines(i32(part.pos.x - 8), i32(part.pos.y - 8), 16, 16, rl.WHITE)
+		if rl.IsTextureValid(assets.scrap_texture) {
+			source_x := 0
+			if part.kind == .Barrel do source_x = 16
+			if part.kind == .Plating do source_x = 32
+			rl.DrawTexturePro(
+				assets.scrap_texture,
+				rl.Rectangle{f32(source_x), 0, 16, 16},
+				rl.Rectangle{part.pos.x, part.pos.y, 32, 32},
+				Vec2{16, 16},
+				0,
+				rl.WHITE,
+			)
+		} else {
+			rl.DrawRectangleV(vec_sub(part.pos, Vec2{8, 8}), Vec2{16, 16}, color)
+			rl.DrawRectangleLines(i32(part.pos.x - 8), i32(part.pos.y - 8), 16, 16, rl.WHITE)
+		}
 	}
 	for bullet in game.bullets {
 		if bullet.alive do rl.DrawCircleV(bullet.pos, 4, rl.YELLOW)

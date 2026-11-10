@@ -20,7 +20,8 @@
 ## Assets
 
 - Visuals: the player texture is generated at startup with Raylib's
-  `GenImageChecked`; no external visual asset is used. Other visuals are
+  `GenImageChecked`; no external visual asset is used. The pickup sprite sheet
+  is `assets/Scrap.png`, created for this project. Other visuals are
   programmer-created shapes rendered with Raylib. The arena tileset is
   `assets/Floor Tileset.png`, created for this project.
 - Arena layout: created in LDtk and stored in `data/main_arena.ldtk`.
