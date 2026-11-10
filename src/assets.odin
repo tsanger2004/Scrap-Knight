@@ -10,6 +10,7 @@ config_path: cstring = "data/game.cfg"
 level_path: cstring = "data/main_arena.ldtk"
 tileset_path: cstring = "assets/Floor Tileset.png"
 
+// Loads the first LDtk level, copying tiles and the player spawn into fixed arrays.
 load_level :: proc() -> Level_Data {
 	level_data: Level_Data
 	level_data.player_spawn = Vec2{ARENA_W / 2, ARENA_H / 2}
@@ -48,6 +49,7 @@ load_level :: proc() -> Level_Data {
 	return level_data
 }
 
+// Loads default gameplay values, then overrides recognized keys from the config file.
 load_tuning :: proc() -> Tuning {
 	tuning := Tuning{
 		player_speed = 250,
@@ -57,8 +59,12 @@ load_tuning :: proc() -> Tuning {
 		spawn_interval_floor = 0.28,
 		enemy_speed = 65,
 		charger_chance = 0.15,
+		gunner_chance = 0.12,
 		charger_damage = 14,
 		scrapper_damage = 8,
+		gunner_damage = 10,
+		gunner_bullet_speed = 300,
+		gunner_fire_interval = 1.2,
 	}
 	raw := rl.LoadFileText(config_path)
 	if raw == nil {
@@ -86,13 +92,18 @@ load_tuning :: proc() -> Tuning {
 		case "spawn_interval_floor": tuning.spawn_interval_floor = f32(value)
 		case "enemy_speed": tuning.enemy_speed = f32(value)
 		case "charger_chance": tuning.charger_chance = f32(value)
+		case "gunner_chance": tuning.gunner_chance = f32(value)
 		case "charger_damage": tuning.charger_damage = int(value)
 		case "scrapper_damage": tuning.scrapper_damage = int(value)
+		case "gunner_damage": tuning.gunner_damage = int(value)
+		case "gunner_bullet_speed": tuning.gunner_bullet_speed = f32(value)
+		case "gunner_fire_interval": tuning.gunner_fire_interval = f32(value)
 		}
 	}
 	return tuning
 }
 
+// Creates the generated player texture and loads the external tileset and pickup sound.
 load_assets :: proc() -> Assets {
 	rl.InitAudioDevice()
 	image := rl.GenImageChecked(32, 32, 4, 4, rl.LIME, rl.DARKGREEN)
@@ -109,6 +120,7 @@ load_assets :: proc() -> Assets {
 	return Assets{player_texture = player_texture, tileset_texture = tileset_texture, pickup_sound = pickup_sound}
 }
 
+// Releases every Raylib resource acquired by load_assets.
 unload_assets :: proc(assets: ^Assets) {
 	rl.UnloadTexture(assets.player_texture)
 	rl.UnloadTexture(assets.tileset_texture)

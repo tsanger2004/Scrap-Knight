@@ -3,6 +3,7 @@ package main
 import rl "vendor:raylib"
 import "core:fmt"
 
+// Draws the arena, entities, HUD, and game-over overlay for the current frame.
 draw_game :: proc() {
 	rl.ClearBackground(rl.Color{16, 20, 25, 255})
 	rl.DrawRectangle(0, 0, ARENA_W, ARENA_H, rl.Color{25, 31, 35, 255})
@@ -21,10 +22,14 @@ draw_game :: proc() {
 	for bullet in game.bullets {
 		if bullet.alive do rl.DrawCircleV(bullet.pos, 4, rl.YELLOW)
 	}
+	for bullet in game.enemy_bullets {
+		if bullet.alive do rl.DrawCircleV(bullet.pos, 5, rl.PURPLE)
+	}
 	for enemy in game.enemies {
 		if !enemy.alive do continue
 		color := rl.ORANGE
 		if enemy.kind == .Charger do color = rl.RED
+		if enemy.kind == .Gunner do color = rl.PURPLE
 		rl.DrawCircleV(enemy.pos, 17, color)
 		rl.DrawCircleV(enemy.pos, 8, rl.Color{50, 35, 30, 255})
 	}
