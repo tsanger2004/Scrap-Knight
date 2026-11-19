@@ -14,19 +14,36 @@ draw_game :: proc() {
 	for part in game.parts {
 		if !part.alive do continue
 		color := rl.GOLD
-		if part.kind == .Grip do color = rl.SKYBLUE
-		if part.kind == .Plating do color = rl.LIGHTGRAY
+		if part.kind == .Cog do color = rl.ORANGE
+		if part.kind == .Scrap do color = rl.SKYBLUE
+		glow_color := rl.Color{190, 190, 190, 55}
+		sprite_color := rl.WHITE
+		glow_radius: f32 = 18
+		switch part.rarity {
+		case .Common:
+			// Common items keep the neutral silver glow.
+		case .Rare:
+			glow_color = rl.Color{70, 160, 255, 90}
+			sprite_color = rl.Color{180, 220, 255, 255}
+			glow_radius = 22
+		case .Epic:
+			glow_color = rl.Color{210, 90, 255, 110}
+			sprite_color = rl.Color{235, 190, 255, 255}
+			glow_radius = 26
+		}
+		rl.DrawCircleV(part.pos, glow_radius, glow_color)
+		rl.DrawCircleLines(i32(part.pos.x), i32(part.pos.y), glow_radius, glow_color)
 		if rl.IsTextureValid(assets.scrap_texture) {
 			source_x := 0
-			if part.kind == .Barrel do source_x = 16
-			if part.kind == .Plating do source_x = 32
+			if part.kind == .Cog do source_x = 16
+			if part.kind == .Scrap do source_x = 32
 			rl.DrawTexturePro(
 				assets.scrap_texture,
 				rl.Rectangle{f32(source_x), 0, 16, 16},
 				rl.Rectangle{part.pos.x, part.pos.y, 32, 32},
 				Vec2{16, 16},
 				0,
-				rl.WHITE,
+				sprite_color,
 			)
 		} else {
 			rl.DrawRectangleV(vec_sub(part.pos, Vec2{8, 8}), Vec2{16, 16}, color)
@@ -61,6 +78,9 @@ draw_game :: proc() {
 	rl.DrawRectangle(SIDEBAR_X + 25, 202, 210, 18, rl.Color{65, 28, 28, 255})
 	rl.DrawRectangle(SIDEBAR_X + 25, 202, i32(210 * max(game.player.health, 0) / game.player.max_health), 18, rl.GREEN)
 	rl.DrawText(fmt.ctprintf("%d / %d", int(max(game.player.health, 0)), int(game.player.max_health)), SIDEBAR_X + 82, 202, 14, rl.WHITE)
+	if game.player.shield > 0 {
+		rl.DrawRectangle(SIDEBAR_X + 25, 224, i32(210 * game.player.shield / 30), 7, rl.SKYBLUE)
+	}
 	rl.DrawText("WEAPON PARTS", SIDEBAR_X + 25, 255, 16, rl.GOLD)
 	rl.DrawText(fmt.ctprintf("BARREL  %d / %d", game.barrel_durability, game.barrel_max), SIDEBAR_X + 25, 285, 17, rl.WHITE)
 	barrel_color := rl.LIME
@@ -68,8 +88,18 @@ draw_game :: proc() {
 	rl.DrawRectangle(SIDEBAR_X + 25, 311, 210, 12, rl.DARKGRAY)
 	rl.DrawRectangle(SIDEBAR_X + 25, 311, i32(210 * f32(game.barrel_durability) / f32(game.barrel_max)), 12, barrel_color)
 	rl.DrawText(fmt.ctprintf("BARREL LV %d", game.barrel_level), SIDEBAR_X + 25, 337, 15, rl.LIGHTGRAY)
-	rl.DrawText(fmt.ctprintf("GRIP LV %d", game.grip_level), SIDEBAR_X + 25, 365, 15, rl.LIGHTGRAY)
-	rl.DrawText(fmt.ctprintf("PLATING LV %d", game.plating_level), SIDEBAR_X + 25, 393, 15, rl.LIGHTGRAY)
+	fuel_name: cstring = "FUEL  NONE"
+	if game.fuel_effect == .Flame do fuel_name = "FUEL  FLAME"
+	if game.fuel_effect == .Turbo do fuel_name = "FUEL  TURBO"
+	cog_name: cstring = "COG  NONE"
+	if game.cog_effect == .Heavy do cog_name = "COG  HEAVY"
+	if game.cog_effect == .Spread do cog_name = "COG  TRIDENT"
+	scrap_name: cstring = "SCRAP  NONE"
+	if game.scrap_effect == .Glass do scrap_name = "SCRAP  GLASS"
+	if game.scrap_effect == .Tank do scrap_name = "SCRAP  TANK"
+	rl.DrawText(fuel_name, SIDEBAR_X + 25, 365, 15, rl.LIGHTGRAY)
+	rl.DrawText(cog_name, SIDEBAR_X + 25, 393, 15, rl.LIGHTGRAY)
+	rl.DrawText(scrap_name, SIDEBAR_X + 25, 421, 15, rl.LIGHTGRAY)
 	rl.DrawText("WASD / ARROWS  MOVE", SIDEBAR_X + 25, 510, 14, rl.LIGHTGRAY)
 	rl.DrawText("MOUSE  AIM + FIRE", SIDEBAR_X + 25, 534, 14, rl.LIGHTGRAY)
 	rl.DrawText("COLLECT GLOWING PARTS", SIDEBAR_X + 25, 558, 14, rl.LIGHTGRAY)

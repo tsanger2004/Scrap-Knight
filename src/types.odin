@@ -20,10 +20,16 @@ Vec2 :: rl.Vector2
 
 // Enemy_Kind selects the enemy's combat tuning.
 Enemy_Kind :: enum { Scrapper, Charger, Gunner }
+// CP4
 // Enemy_State is the per-enemy state-machine state.
 Enemy_State :: enum { Chase, Attack, Recover, Strafe }
-// Part_Kind identifies which player upgrade a pickup provides.
-Part_Kind :: enum { Barrel, Grip, Plating }
+// Part_Kind identifies the independently replaceable drop system.
+Part_Kind :: enum { Fuel, Cog, Scrap }
+Part_Rarity :: enum { Common, Rare, Epic }
+Fuel_Effect :: enum { None, Flame, Turbo }
+Cog_Effect :: enum { None, Heavy, Spread }
+Scrap_Effect :: enum { None, Glass, Tank }
+// CP4
 // Game_State controls whether simulation is active or awaiting a restart.
 Game_State :: enum { Playing, Game_Over }
 
@@ -32,6 +38,7 @@ Player :: struct {
 	pos: Vec2,
 	health: f32,
 	max_health: f32,
+	shield: f32,
 	speed: f32,
 	fire_timer: f32,
 	invulnerable: f32,
@@ -41,9 +48,12 @@ Player :: struct {
 Enemy :: struct {
 	pos: Vec2,
 	kind: Enemy_Kind,
+	// CP4
 	state: Enemy_State,
+	// CP4
 	state_timer: f32,
 	health: int,
+	// CP4
 	speed: f32,
 	alive: bool,
 }
@@ -66,6 +76,7 @@ Enemy_Bullet :: struct {
 Part :: struct {
 	pos: Vec2,
 	kind: Part_Kind,
+	rarity: Part_Rarity,
 	durability: int,
 	alive: bool,
 }
@@ -77,6 +88,12 @@ Game :: struct {
 	bullets: [MAX_BULLETS]Bullet,
 	enemy_bullets: [MAX_ENEMY_BULLETS]Enemy_Bullet,
 	parts: [MAX_PARTS]Part,
+	fuel_effect: Fuel_Effect,
+	cog_effect: Cog_Effect,
+	scrap_effect: Scrap_Effect,
+	fuel_rarity: Part_Rarity,
+	cog_rarity: Part_Rarity,
+	scrap_rarity: Part_Rarity,
 	barrel_durability: int,
 	barrel_max: int,
 	barrel_level: int,
@@ -175,8 +192,22 @@ Tuning :: struct {
 	enemy_bullet_hit_range: f32,
 	player_bullet_hit_range: f32,
 	part_drop_chance: f32,
+	rarity_rare_chance: f32,
+	rarity_epic_chance: f32,
 	part_base_durability: int,
 	part_wave_durability: int,
+	fuel_flame_damage: int,
+	fuel_flame_speed: f32,
+	fuel_turbo_fire_multiplier: f32,
+	cog_heavy_damage: int,
+	cog_spread_count: int,
+	cog_spread_angle: f32,
+	scrap_glass_health: f32,
+	scrap_glass_speed: f32,
+	scrap_glass_shield: f32,
+	scrap_tank_health: f32,
+	scrap_tank_speed: f32,
+	scrap_tank_shield: f32,
 	barrel_starting_durability: int,
 	barrel_starting_max: int,
 	barrel_max_durability: int,
