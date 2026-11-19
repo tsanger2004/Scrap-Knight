@@ -99,6 +99,9 @@ spawn floor prevents the late game from becoming an unreadable instant spike.
 | `enemy_speed` | 100 | 82 | Gives players more reaction time early |
 | `enemy_speed_wave_bonus` | 3/wave | 2/wave | Slows the speed escalation |
 | `enemy_health_wave_bonus` | +1 health/3 waves | +1 health/4 waves | Delays the health step-up |
+| `charger_damage`  | 14 | 20 | Increased Threat |
+| `scrapper_damage` | 8 | 14 | Increased Threat |
+| `gunner_damage` | 10 | 15 | Increased Threat |
 
 ### Enemy drop systems
 
